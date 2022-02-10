@@ -1,4 +1,4 @@
-package com.lr;
+package com.lr.source.beaver.bounded;
 
 import org.apache.flink.api.common.ExecutionConfig;
 import org.apache.flink.api.common.typeutils.TypeSerializer;
@@ -13,8 +13,6 @@ import java.util.Collection;
 import java.util.List;
 import java.util.Stack;
 import java.util.concurrent.atomic.AtomicInteger;
-
-import static java.awt.SystemColor.window;
 
 /**
  * @author xu.shijie

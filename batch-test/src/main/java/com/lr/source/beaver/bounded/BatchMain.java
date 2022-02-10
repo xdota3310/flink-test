@@ -1,47 +1,21 @@
-package com.lr;
+package com.lr.source.beaver.bounded;
 
-import org.apache.flink.api.common.ExecutionConfig;
 import org.apache.flink.api.common.functions.FlatMapFunction;
-import org.apache.flink.api.common.typeutils.TypeSerializer;
 import org.apache.flink.api.java.functions.KeySelector;
 import org.apache.flink.api.java.tuple.Tuple2;
-import org.apache.flink.runtime.testutils.MiniClusterResourceConfiguration;
 import org.apache.flink.streaming.api.environment.StreamExecutionEnvironment;
 import org.apache.flink.streaming.api.functions.sink.SinkFunction;
 import org.apache.flink.streaming.api.functions.source.SourceFunction;
 import org.apache.flink.streaming.api.functions.windowing.ProcessWindowFunction;
-import org.apache.flink.streaming.api.windowing.assigners.WindowAssigner;
-import org.apache.flink.streaming.api.windowing.triggers.Trigger;
-import org.apache.flink.streaming.api.windowing.triggers.TriggerResult;
 import org.apache.flink.streaming.api.windowing.windows.Window;
-import org.apache.flink.test.util.MiniClusterWithClientResource;
 import org.apache.flink.util.Collector;
-import org.junit.ClassRule;
-import org.junit.Test;
 
-import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.List;
 import java.util.UUID;
-import java.util.concurrent.atomic.AtomicInteger;
 
-/**
- * @author xu.shijie
- * @since 2022/2/10
- */
-public class BatchTestCase implements Serializable {
-    @ClassRule
-    public static MiniClusterWithClientResource flinkCluster =
-            new MiniClusterWithClientResource(
-                    new MiniClusterResourceConfiguration.Builder()
-                            .setNumberSlotsPerTaskManager(1)
-                            .setNumberTaskManagers(1)
-                            .build());
-
-
-    @Test
-    public void batch() throws Exception {
+public class BatchMain {
+    public void run() throws Exception {
         StreamExecutionEnvironment env = StreamExecutionEnvironment.getExecutionEnvironment();
 //        env.setRuntimeMode(RuntimeExecutionMode.BATCH);
         env.setParallelism(1);
@@ -54,9 +28,7 @@ public class BatchTestCase implements Serializable {
                 while (this.isRunning) {
                     i++;
                     ctx.collect(new Tuple2<>(i + "", UUID.randomUUID().toString()));
-                    if (i % 5 == 0) {
-                        Thread.sleep(5000);
-                    }
+                    Thread.sleep(500);
                 }
             }
 
@@ -93,5 +65,10 @@ public class BatchTestCase implements Serializable {
             }
         });
         env.execute();
+    }
+
+    public static void main(String[] args) throws Exception {
+        BatchMain main = new BatchMain();
+        main.run();
     }
 }

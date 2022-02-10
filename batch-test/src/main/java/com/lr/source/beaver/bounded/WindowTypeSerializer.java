@@ -1,4 +1,4 @@
-package com.lr;
+package com.lr.source.beaver.bounded;
 
 import org.apache.flink.api.common.typeutils.SimpleTypeSerializerSnapshot;
 import org.apache.flink.api.common.typeutils.TypeSerializerSnapshot;
