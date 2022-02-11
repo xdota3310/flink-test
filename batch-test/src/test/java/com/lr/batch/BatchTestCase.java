@@ -31,13 +31,13 @@ public class BatchTestCase implements Serializable {
 
 
     @Test
-    public void batch() throws Exception {
+    public void remoteTest() throws Exception {
         PackagedProgram.Builder builder = PackagedProgram.newBuilder();
         builder.setJarFile(new File("target/batch-test-1.0-SNAPSHOT.jar"));
         builder.setEntryPointClassName(BatchMain.class.getName());
 
         Configuration configuration = new Configuration();
-        configuration.setString(JobManagerOptions.ADDRESS,  "192.168.104.201");
+        configuration.setString(JobManagerOptions.ADDRESS,  "192.168.1.15");
         configuration.setInteger(JobManagerOptions.PORT, 18081);
         configuration.setInteger(RestOptions.PORT,18081);
 
@@ -46,5 +46,11 @@ public class BatchTestCase implements Serializable {
         JobGraph jobGraph = PackagedProgramUtils.createJobGraph(builder.build(),
                 configuration, 1, true);
        client.submitJob(jobGraph).get();
+    }
+
+    @Test
+    public void localTest() throws Exception {
+        BatchMain batchMain = new BatchMain();
+        batchMain.run();
     }
 }
