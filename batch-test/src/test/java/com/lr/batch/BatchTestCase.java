@@ -37,7 +37,7 @@ public class BatchTestCase implements Serializable {
         builder.setEntryPointClassName(BatchMain.class.getName());
 
         Configuration configuration = new Configuration();
-        configuration.setString(JobManagerOptions.ADDRESS,  "192.168.1.15");
+        configuration.setString(JobManagerOptions.ADDRESS,  "172.27.99.174");
         configuration.setInteger(JobManagerOptions.PORT, 18081);
         configuration.setInteger(RestOptions.PORT,18081);
 
