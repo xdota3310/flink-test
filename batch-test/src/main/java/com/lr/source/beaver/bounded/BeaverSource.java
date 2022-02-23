@@ -19,6 +19,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
+/**
+ * @author xu.shijie
+ */
 public class BeaverSource extends RichSourceFunction<Tuple2<String, String>> implements CheckpointedFunction {
     public volatile boolean isRunning = true;
     private transient ListState<BloomFilter> bloomFilterValueState;
@@ -66,8 +69,7 @@ public class BeaverSource extends RichSourceFunction<Tuple2<String, String>> imp
     @Override
     public void initializeState(FunctionInitializationContext context) throws Exception {
         ListStateDescriptor<BloomFilter> descriptor =
-                new ListStateDescriptor<>("buffered-elements", TypeInformation.of(new TypeHint<BloomFilter>() {
-                }));
+                new ListStateDescriptor<>("bloomfilter", TypeInformation.of(new TypeHint<BloomFilter>() {}));
         bloomFilterValueState = context.getOperatorStateStore().getListState(descriptor);
         if (context.isRestored()) {
             for (BloomFilter filter : bloomFilterValueState.get()) {
